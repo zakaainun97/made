@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Slider with Paragraphs</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .slider {
+            display: flex;
+            gap: 10px;
+            border-bottom: 1px solid #ccc;
+            width: 100%;
+        }
+        .slide {
+            cursor: pointer;
+            position: relative;
+        }
+        .slide::after {
+            content: '';
+            display: block;
+            height: 2px;
+            background-color: #fff;
+            margin-top: 5px;
+            transition: height 0.3s ease, background-color 0.3s ease;
+        }
+        .slide.active::after {
+            height: 2px;
+            background-color: #333;
+        }
+        .content {
+            opacity: 0;
+            height: 0;
+            overflow: hidden;
+            transition: opacity 0.3s ease, height 0.3s ease;
+        }
+        .content.active {
+            opacity: 1;
+            height: auto;
+            overflow: visible;
+        }
+    </style>
+</head>
+<body>
+
+<div class="slider">
+    <div class="slide active" onclick="showContent(1)">Slide 1</div>
+    <div class="slide" onclick="showContent(2)">Slide 2</div>
+</div>
+
+<div id="content-1" class="content active">
+    <p>This is the paragraph for Slide 1. It will be displayed when Slide 1 is clicked.</p>
+</div>
+
+<div id="content-2" class="content">
+    <p>This is the paragraph for Slide 2. It will be displayed when Slide 2 is clicked.</p>
+</div>
+
+<script>
+    function showContent(slideNumber) {
+        // Remove active class from all slides and contents
+        const slides = document.querySelectorAll('.slide');
+        const contents = document.querySelectorAll('.content');
+        
+        slides.forEach(slide => slide.classList.remove('active'));
+        contents.forEach(content => content.classList.remove('active'));
+        
+        // Add active class to the clicked slide and corresponding content
+        document.querySelector(`.slide:nth-child(${slideNumber})`).classList.add('active');
+        document.getElementById(`content-${slideNumber}`).classList.add('active');
+    }
+</script>
+
+</body>
+</html>
